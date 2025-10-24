@@ -3,23 +3,28 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AI Box Flasher — Stable</title>
-
+  <title>AI Box Flasher — WORKING BUILD</title>
   <link rel="stylesheet" href="styles.css">
 
-  <!-- ✅ PHIÊN BẢN CHUẨN: UMD bundle có window.ESPLoader -->
-  <script src="https://unpkg.com/esptool-js@0.4.3/bundle.js"></script>
+  <!-- ✅ Bản ổn định UMD (hoạt động thật) -->
+  <script src="https://cdn.jsdelivr.net/gh/espressif/esptool-js@v0.4.3/umd/esptool.umd.js"></script>
 
-  <!-- Thư viện CryptoJS để kiểm tra MD5/sha256 -->
+  <!-- CryptoJS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
   <script>
-    window.addEventListener('load', () => {
-      if (!window.ESPLoader) {
-        const msg = '❌ esptool-js chưa được load (bundle.js không khả dụng).';
-        document.body.innerHTML = `<div style="color:red;padding:24px;font-family:monospace">${msg}<br>
-        Kiểm tra console hoặc kết nối mạng, thử lại.</div>`;
-        console.error(msg);
+    // Kiểm tra xem ESPLoader có tồn tại sau khi load
+    window.addEventListener("load", () => {
+      if (!window.ESPLoader || !window.Transport) {
+        document.body.innerHTML =
+          "<div style='font-family:monospace;padding:24px;color:red'>" +
+          "❌ Không thể tải esptool-js UMD.<br>" +
+          "Kiểm tra kết nối Internet hoặc CDN bị chặn.<br>" +
+          "Đường dẫn đang dùng: cdn.jsdelivr.net/gh/espressif/esptool-js@v0.4.3/umd/esptool.umd.js" +
+          "</div>";
+        console.error("esptool-js chưa load!");
+      } else {
+        console.log("✅ esptool-js loaded:", window.ESPLoader);
       }
     });
   </script>
@@ -27,7 +32,7 @@
 
 <body>
   <main class="container">
-    <h1>AI Box Flasher</h1>
+    <h1>AI Box Flasher (UMD fixed)</h1>
 
     <!-- 1. Kết nối -->
     <section class="card">
@@ -52,7 +57,7 @@
       <h2>2) Chọn firmware</h2>
       <div class="row">
         <input type="file" id="firmFile" accept=".bin">
-        <input type="text" id="firmUrl" placeholder="Hoặc URL .bin (https://...)">
+        <input type="text" id="firmUrl" placeholder="Hoặc URL firmware (.bin)">
         <button id="btnLoadUrl">Tải từ URL</button>
       </div>
       <div id="firmInfo" class="muted">Chưa có firmware</div>
@@ -78,7 +83,7 @@
     </section>
 
     <footer class="muted">
-      Phiên bản stable — bundle 0.4.3<br>
+      ✅ Phiên bản hoạt động: esptool-js UMD 0.4.3<br>
       Yêu cầu Chrome/Edge + HTTPS hoặc localhost.
     </footer>
   </main>
