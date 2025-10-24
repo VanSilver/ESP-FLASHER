@@ -7,16 +7,16 @@
 
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Esptool-js bundle (dùng để flash). Nếu không muốn dùng CDN, cài bản local và thay đường dẫn này.
-       NOTE: nếu phiên bản CDN không tồn tại, chức năng flash sẽ không hoạt động và UI sẽ báo lỗi rõ ràng. -->
-  <script type="module">
-    // Không import ở đây để UI vẫn load nếu CDN không có; flasher.js kiểm tra window.ESPLoader
-  </script>
+  <!-- esptool-js và crypto-js (phục vụ flash firmware) -->
+  <script src="https://cdn.jsdelivr.net/npm/esptool-js@0.5.2/dist/esptool.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
+
 <body>
   <main class="container">
     <h1>AI Box Flasher (Minimal)</h1>
 
+    <!-- PHẦN 1: KẾT NỐI THIẾT BỊ -->
     <section class="card">
       <h2>1) Kết nối thiết bị</h2>
       <div class="row">
@@ -34,6 +34,7 @@
       <div id="connInfo" class="muted">Chưa kết nối</div>
     </section>
 
+    <!-- PHẦN 2: CHỌN FIRMWARE -->
     <section class="card">
       <h2>2) Chọn firmware</h2>
       <div class="row">
@@ -44,6 +45,7 @@
       <div id="firmInfo" class="muted">Chưa có firmware</div>
     </section>
 
+    <!-- PHẦN 3: FLASH -->
     <section class="card">
       <h2>3) Flash</h2>
       <div class="row">
@@ -55,15 +57,20 @@
       </div>
     </section>
 
+    <!-- PHẦN 4: LOG / TERMINAL -->
     <section class="card">
       <h2>Terminal / Log</h2>
       <pre id="terminal" class="terminal"></pre>
       <div id="errors" class="error"></div>
     </section>
 
-    <footer class="muted">Để bật chức năng flash tự động: thêm script esptool-js bundle (xem README).</footer>
+    <footer class="muted">
+      Phiên bản demo. Web Serial hoạt động trên Chrome/Edge.  
+      Chạy qua HTTPS hoặc localhost để flash.
+    </footer>
   </main>
 
+  <!-- Script chính -->
   <script type="module" src="src/main.js"></script>
 </body>
 </html>
