@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AI Box Flasher — Minimal</title>
+  <title>AI Box Flasher — Fixed</title>
 
   <link rel="stylesheet" href="styles.css">
 
-  <!-- esptool-js và crypto-js (phục vụ flash firmware) -->
-  <script src="lib/esptool.bundle.js"></script>
+  <!-- ✅ Phiên bản esptool-js 0.4.3 (bundle UMD có global ESPLoader) -->
+  <script src="https://unpkg.com/esptool-js@0.4.3/bundle.js"></script>
+  <!-- Thư viện hash để verify firmware -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-
 </head>
 
 <body>
   <main class="container">
-    <h1>AI Box Flasher (Minimal)</h1>
+    <h1>AI Box Flasher</h1>
 
     <!-- PHẦN 1: KẾT NỐI THIẾT BỊ -->
     <section class="card">
@@ -66,8 +66,8 @@
     </section>
 
     <footer class="muted">
-      Phiên bản demo. Web Serial hoạt động trên Chrome/Edge.  
-      Chạy qua HTTPS hoặc localhost để flash.
+      Phiên bản đã fix: sử dụng <strong>esptool-js@0.4.3 (bundle)</strong>  
+      Hoạt động trên Chrome/Edge, qua HTTPS hoặc localhost.
     </footer>
   </main>
 

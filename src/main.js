@@ -1,41 +1,30 @@
-// src/main.js
 import { Flasher } from './flasher.js';
 
 const btnConnect = document.getElementById('btnConnect');
 const btnDisconnect = document.getElementById('btnDisconnect');
 const baudEl = document.getElementById('baud');
 const connInfo = document.getElementById('connInfo');
-
 const firmFile = document.getElementById('firmFile');
 const firmUrl = document.getElementById('firmUrl');
 const btnLoadUrl = document.getElementById('btnLoadUrl');
 const firmInfo = document.getElementById('firmInfo');
-
 const btnFlash = document.getElementById('btnFlash');
 const prog = document.getElementById('prog');
 const progText = document.getElementById('progText');
 const progressWrap = document.getElementById('progressWrap');
-
 const terminal = document.getElementById('terminal');
 const errors = document.getElementById('errors');
 
 let flasher = new Flasher({
-  log: (line) => {
-    terminal.textContent += line + '\n';
-    terminal.scrollTop = terminal.scrollHeight;
-  },
+  log: (line) => { terminal.textContent += line + '\n'; terminal.scrollTop = terminal.scrollHeight; },
   setStatus: (s) => { connInfo.textContent = s; },
   onProgress: (p) => {
     progressWrap.style.display = 'block';
     prog.value = Math.round(p);
     progText.textContent = Math.round(p) + '%';
   },
-  onDone: () => {
-    btnFlash.disabled = true;
-  },
-  onError: (e) => {
-    errors.textContent = (e && e.message) ? e.message : String(e);
-  }
+  onDone: () => { btnFlash.disabled = true; },
+  onError: (e) => { errors.textContent = (e && e.message) ? e.message : String(e); }
 });
 
 btnConnect.addEventListener('click', async () => {
@@ -45,9 +34,7 @@ btnConnect.addEventListener('click', async () => {
     btnDisconnect.disabled = false;
     btnConnect.disabled = true;
     btnFlash.disabled = !flasher.hasFirmware();
-  } catch (e) {
-    errors.textContent = e.message || e;
-  }
+  } catch (e) { errors.textContent = e.message || e; }
 });
 
 btnDisconnect.addEventListener('click', async () => {
@@ -89,16 +76,11 @@ btnLoadUrl.addEventListener('click', async () => {
 btnFlash.addEventListener('click', async () => {
   errors.textContent = '';
   btnFlash.disabled = true;
-  try {
-    await flasher.flash();
-  } catch (e) {
-    errors.textContent = e.message || e;
-  } finally {
-    btnFlash.disabled = false;
-  }
+  try { await flasher.flash(); }
+  catch (e) { errors.textContent = e.message || e; }
+  finally { btnFlash.disabled = false; }
 });
 
-// On load: check if esptool-js is present (optional)
 window.addEventListener('load', () => {
   if (!('serial' in navigator)) {
     errors.textContent = 'Trình duyệt không hỗ trợ Web Serial API. Dùng Chrome/Edge mới nhất.';
