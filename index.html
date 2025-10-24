@@ -3,30 +3,42 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AI Box Flasher — Fixed</title>
+  <title>AI Box Flasher — Stable</title>
 
   <link rel="stylesheet" href="styles.css">
 
-  <!-- ✅ Phiên bản esptool-js 0.4.3 (bundle UMD có global ESPLoader) -->
+  <!-- ✅ PHIÊN BẢN CHUẨN: UMD bundle có window.ESPLoader -->
   <script src="https://unpkg.com/esptool-js@0.4.3/bundle.js"></script>
-  <!-- Thư viện hash để verify firmware -->
+
+  <!-- Thư viện CryptoJS để kiểm tra MD5/sha256 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+  <script>
+    window.addEventListener('load', () => {
+      if (!window.ESPLoader) {
+        const msg = '❌ esptool-js chưa được load (bundle.js không khả dụng).';
+        document.body.innerHTML = `<div style="color:red;padding:24px;font-family:monospace">${msg}<br>
+        Kiểm tra console hoặc kết nối mạng, thử lại.</div>`;
+        console.error(msg);
+      }
+    });
+  </script>
 </head>
 
 <body>
   <main class="container">
     <h1>AI Box Flasher</h1>
 
-    <!-- PHẦN 1: KẾT NỐI THIẾT BỊ -->
+    <!-- 1. Kết nối -->
     <section class="card">
       <h2>1) Kết nối thiết bị</h2>
       <div class="row">
-        <label>Tốc độ (baud): 
+        <label>Tốc độ (baud):
           <select id="baud">
             <option value="921600">921600</option>
             <option value="460800">460800</option>
             <option value="230400">230400</option>
-            <option value="115200">115200</option>
+            <option value="115200" selected>115200</option>
           </select>
         </label>
         <button id="btnConnect">Kết nối</button>
@@ -35,18 +47,18 @@
       <div id="connInfo" class="muted">Chưa kết nối</div>
     </section>
 
-    <!-- PHẦN 2: CHỌN FIRMWARE -->
+    <!-- 2. Chọn firmware -->
     <section class="card">
       <h2>2) Chọn firmware</h2>
       <div class="row">
         <input type="file" id="firmFile" accept=".bin">
-        <input type="text" id="firmUrl" placeholder="Hoặc paste URL firmware .bin (https://...)">
+        <input type="text" id="firmUrl" placeholder="Hoặc URL .bin (https://...)">
         <button id="btnLoadUrl">Tải từ URL</button>
       </div>
       <div id="firmInfo" class="muted">Chưa có firmware</div>
     </section>
 
-    <!-- PHẦN 3: FLASH -->
+    <!-- 3. Flash -->
     <section class="card">
       <h2>3) Flash</h2>
       <div class="row">
@@ -58,7 +70,7 @@
       </div>
     </section>
 
-    <!-- PHẦN 4: LOG / TERMINAL -->
+    <!-- 4. Log -->
     <section class="card">
       <h2>Terminal / Log</h2>
       <pre id="terminal" class="terminal"></pre>
@@ -66,12 +78,11 @@
     </section>
 
     <footer class="muted">
-      Phiên bản đã fix: sử dụng <strong>esptool-js@0.4.3 (bundle)</strong>  
-      Hoạt động trên Chrome/Edge, qua HTTPS hoặc localhost.
+      Phiên bản stable — bundle 0.4.3<br>
+      Yêu cầu Chrome/Edge + HTTPS hoặc localhost.
     </footer>
   </main>
 
-  <!-- Script chính -->
   <script type="module" src="src/main.js"></script>
 </body>
 </html>
