@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Box Flasher — Minimal</title>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Esptool-js bundle (dùng để flash). Nếu không muốn dùng CDN, cài bản local và thay đường dẫn này.
+       NOTE: nếu phiên bản CDN không tồn tại, chức năng flash sẽ không hoạt động và UI sẽ báo lỗi rõ ràng. -->
+  <script type="module">
+    // Không import ở đây để UI vẫn load nếu CDN không có; flasher.js kiểm tra window.ESPLoader
+  </script>
+</head>
+<body>
+  <main class="container">
+    <h1>AI Box Flasher (Minimal)</h1>
+
+    <section class="card">
+      <h2>1) Kết nối thiết bị</h2>
+      <div class="row">
+        <label>Tốc độ (baud): 
+          <select id="baud">
+            <option value="921600">921600</option>
+            <option value="460800">460800</option>
+            <option value="230400">230400</option>
+            <option value="115200">115200</option>
+          </select>
+        </label>
+        <button id="btnConnect">Kết nối</button>
+        <button id="btnDisconnect" disabled>Ngắt kết nối</button>
+      </div>
+      <div id="connInfo" class="muted">Chưa kết nối</div>
+    </section>
+
+    <section class="card">
+      <h2>2) Chọn firmware</h2>
+      <div class="row">
+        <input type="file" id="firmFile" accept=".bin">
+        <input type="text" id="firmUrl" placeholder="Hoặc paste URL firmware .bin (https://...)">
+        <button id="btnLoadUrl">Tải từ URL</button>
+      </div>
+      <div id="firmInfo" class="muted">Chưa có firmware</div>
+    </section>
+
+    <section class="card">
+      <h2>3) Flash</h2>
+      <div class="row">
+        <button id="btnFlash" disabled>Flash firmware</button>
+      </div>
+      <div id="progressWrap" class="muted" style="display:none">
+        <progress id="prog" max="100" value="0"></progress>
+        <span id="progText">0%</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Terminal / Log</h2>
+      <pre id="terminal" class="terminal"></pre>
+      <div id="errors" class="error"></div>
+    </section>
+
+    <footer class="muted">Để bật chức năng flash tự động: thêm script esptool-js bundle (xem README).</footer>
+  </main>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
