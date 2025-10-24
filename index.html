@@ -3,26 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AI Box Flasher — WORKING BUILD</title>
+  <title>AI Box Flasher</title>
   <link rel="stylesheet" href="styles.css">
 
-  <!-- ✅ Bản ổn định UMD (hoạt động thật) -->
+  <!-- ✅ Phiên bản UMD hoạt động thật -->
   <script src="https://cdn.jsdelivr.net/gh/espressif/esptool-js@v0.4.3/umd/esptool.umd.js"></script>
 
-  <!-- CryptoJS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
   <script>
-    // Kiểm tra xem ESPLoader có tồn tại sau khi load
     window.addEventListener("load", () => {
       if (!window.ESPLoader || !window.Transport) {
         document.body.innerHTML =
-          "<div style='font-family:monospace;padding:24px;color:red'>" +
-          "❌ Không thể tải esptool-js UMD.<br>" +
-          "Kiểm tra kết nối Internet hoặc CDN bị chặn.<br>" +
-          "Đường dẫn đang dùng: cdn.jsdelivr.net/gh/espressif/esptool-js@v0.4.3/umd/esptool.umd.js" +
-          "</div>";
-        console.error("esptool-js chưa load!");
+          "<div style='padding:24px;font-family:monospace;color:red'>❌ Không thể tải esptool-js bundle.<br>Kiểm tra kết nối hoặc CDN bị chặn.</div>";
       } else {
         console.log("✅ esptool-js loaded:", window.ESPLoader);
       }
@@ -32,7 +25,7 @@
 
 <body>
   <main class="container">
-    <h1>AI Box Flasher (UMD fixed)</h1>
+    <h1>AI Box Flasher</h1>
 
     <!-- 1. Kết nối -->
     <section class="card">
@@ -49,6 +42,7 @@
         <button id="btnConnect">Kết nối</button>
         <button id="btnDisconnect" disabled>Ngắt kết nối</button>
       </div>
+      <div id="chipInfo" class="muted"></div>
       <div id="connInfo" class="muted">Chưa kết nối</div>
     </section>
 
@@ -83,8 +77,8 @@
     </section>
 
     <footer class="muted">
-      ✅ Phiên bản hoạt động: esptool-js UMD 0.4.3<br>
-      Yêu cầu Chrome/Edge + HTTPS hoặc localhost.
+      Hỗ trợ ESP8266 / ESP32 / S2 / S3 / C3 / C6 / H2<br>
+      Dùng Chrome hoặc Edge, chạy qua HTTPS hoặc localhost.
     </footer>
   </main>
 
